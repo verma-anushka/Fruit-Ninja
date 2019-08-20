@@ -33,14 +33,25 @@ function setup(){
     scoreImg = loadImage('images/score.png');
     gameOverImg = loadImage('images/game-over.png');
     logo = loadImage('images/logo.png');
-    
+    fruitImg = loadImage('images/fruitMode.png');
+    veggieImg = loadImage('images/peach.png');
+
+    // console.log(fruitImg);
+    // console.log(veggieImg);
+
     bg = loadImage('images/background.jpg');
     createCanvas(800,600);
     sword = new Sword(color("#FFFFFF"));
+    mode1 = new Mode(100,350);
+    mode2 = new Mode(600,350);
+
     frameRate(60);
     score = 0;
     lives = 3;
-    // textAlign(CENTER);
+
+    
+    // var a = document.getElementById('fruitImg');
+    // a.mouseClicked();
     // fruit.push(new Fruit(random(width),height,3,"#FF00FF",random()));
 }
 
@@ -52,30 +63,24 @@ function startScreen(){
     }
 }
 
-
 function draw(){
-    // if(lives === 0){
-    //     clear();
-    //     background(bg);
-    // }
     background(bg);
     image(this.logo, 20, 20, 288, 135);
 
     textAlign(LEFT);
     noStroke();
     fill(255,147,21);
-    // fill(rgb(253,147,21));
-    // fill(#fd9315);
     textSize(50);
     text("Select your mode: ", 200, 250);
-    // text("Select your mode: ")
+    mode1.move();
+    mode2.move();
+    mode1.display1();
+    mode2.display2();
 
+    if(mode===1){
 
-    if(mouseIsPressed){
-        start = true;
-    }
-
-    if(start){
+        clear();
+        background(bg);
         if(mouseIsPressed){
             sword.swipe(mouseX, mouseY);
         }
@@ -123,6 +128,11 @@ function draw(){
         drawLives();  
     }
     
+}
+
+function mousePressed(){
+    mode1.clicked();
+    mode2.clicked();
 }
 
 function drawLives(){
