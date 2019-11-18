@@ -1,19 +1,5 @@
-/* #container{
-    text-align: center;
-}
-
-#canvas{
-    background: black;
-    background: url("images/background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;   
-} */
-
 body{
     text-align: center;
     background: url("images/background.jpg") no-repeat center center;
     background-size: cover;   
-    /* opacity: 0.5; */
-    /* margin-top: 5%; */
-    /* line-height: 50%; */
 }
