@@ -5,6 +5,7 @@ var lives;
 var x = 0; //for lives
 var button;
 var bomb;
+var angle = 0;
 var fruit = [];
 var livesImgs = [];
 var livesImgs2 = [];
@@ -37,11 +38,16 @@ function setup(){
     bomb = loadImage('images/boom.png');
     scoreImg = loadImage('images/score.png');
     gameOverImg = loadImage('images/game-over.png');
-    logo = loadImage('images/logo.png');
+    fruitLogo = loadImage('images/fruit.png');
+    ninjaLogo = loadImage('images/ninja.png');
     fruitImg = loadImage('images/fruitMode.png');
+    newGameImg = loadImage('images/new-game.png');
+    foregroundImg = loadImage('images/home-mask.png');
     bg = loadImage('images/background.jpg');
     cnv = createCanvas(800,635);
     sword = new Sword(color("#FFFFFF"));
+    angleMode(DEGREES);
+
     frameRate(60);
     score = 0;
     lives = 3;
@@ -81,14 +87,13 @@ function draw(){
     clear();
     background(bg);
 
-    image(this.logo, 20, 20, 288, 135);
-    textAlign(LEFT);
-    noStroke();
-    fill(255,147,21);
-    textSize(50);
-    image(this.fruitImg, 390, 280, 60, 60);
-    cnv.mouseClicked(check);
+    image(this.foregroundImg, 0, 0, 800, 350);
+    image(this.fruitLogo, 40, 20, 358, 195);
+    image(this.ninjaLogo, 420, 50, 318, 165);
+    image(this.newGameImg, 310, 360, 200, 200);
+    image(this.fruitImg, 365, 415, 90, 90);
     
+    cnv.mouseClicked(check);
     if(isPlay){
         game();
     }
@@ -106,7 +111,7 @@ function draw(){
 function check(){
     // console.log(mouseX);
     // console.log(mouseY);
-    if(mouseX > 380 && mouseX < 450 && mouseY > 280 && mouseY < 340){
+    if(mouseX > 300 && mouseX < 520 && mouseY > 350 && mouseY < 550){
         isPlay = true;
 
     }
