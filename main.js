@@ -8,7 +8,7 @@ var bomb;
 var fruit = [];
 var livesImgs = [];
 var livesImgs2 = [];
-var fruitsList = ['apple', 'banana', 'peach', 'strawberry', 'watermelon'];
+var fruitsList = ['apple', 'banana', 'peach', 'strawberry', 'watermelon', 'boom'];
 var fruitsImgs = [];
 var isPlay = false;
 // var timer;
@@ -80,6 +80,7 @@ function draw(){
     // console.log("draw");
     clear();
     background(bg);
+
     image(this.logo, 20, 20, 288, 135);
     textAlign(LEFT);
     noStroke();
@@ -107,6 +108,7 @@ function check(){
     // console.log(mouseY);
     if(mouseX > 380 && mouseX < 450 && mouseY > 280 && mouseY < 340){
         isPlay = true;
+
     }
 }
 
@@ -127,25 +129,26 @@ function game(){
         fruit[i].update();
         fruit[i].draw();
         if(!fruit[i].visible){
-            if(!fruit[i].sliced){
+
+            console.log( fruit[i].visible );
+
+            if(!fruit[i].sliced && fruit[i].name != 'boom'){
                 lives--;
                 if(lives == 2){
                     image(this.livesImgs2[0], width - (3*30 + 30), 20, livesImgs2[0].width, livesImgs2[0].height);
                 }
                 x++;
-            }else{
-                // if( fruitsList[i] === 'boom'){
-                //     console.log( fruitsList[i] );
-                //     console.log("boom!!!");
-                //     gameOver();
-                //     // draw();
-                // }
             }
-            if(lives < 1){
+            if(lives < 1 ){
                 gameOver();
             }
             fruit.splice(i,1);
         }else{
+            console.log( "else" );
+            if(fruit[i].sliced && fruit[i].name == 'boom'){
+                console.log("boom!!!");
+                gameOver();
+            }
             points += (sword.checkSlice(fruit[i])) ? 1 : 0;
         }
     }

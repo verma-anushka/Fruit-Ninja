@@ -1,14 +1,15 @@
 
-function Fruit(x,y,speed,color,size,fruit,bomb){
+function Fruit(x,y,speed,color,size,fruit,name){
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.color = color;
-    this.bomb = bomb; 
+    // this.bomb = bomb; 
     this.size = size;
     this.xSpeed = randomXSpeed(x);
     this.ySpeed = random(-10.4, -7.4);
     this.fruit = fruit;
+    this.name = name;
     this.sliced = false;
     this.visible = true;
 }
@@ -59,9 +60,9 @@ function randomFruit(){
     var col = color(random(255),random(255),random(255));
     var speed = random(3,5);
     var idx = round(random(0,fruitsList.length-1));
-    // console.log(idx);
-    var fruit = random(fruitsImgs);
-    return new Fruit(x,y,speed,col,size,fruit,bomb);
+    var fruit = fruitsImgs[idx];
+    var name = fruitsList[idx];
+    return new Fruit(x,y,speed,col,size,fruit,name);
 }
 
 function randomXSpeed(x){
