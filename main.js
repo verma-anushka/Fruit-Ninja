@@ -17,11 +17,22 @@ var isPlay = false;
 // var seconds, minutes;
 var timerValue = 60;
 var startButton;
-
 var GRAVITY = 0.1;
 let img;
+let boom, spliced, missed, over, start;
 
-function setup(){
+// p5.prototype.registerPreloadMethod('loadSound', p5.prototype);
+
+
+function preload(){
+
+    // SOUNDS
+    boom = loadSound('sounds/boom.mp3');
+    spliced = loadSound('sounds/splatter.mp3');
+    missed = loadSound('sounds/missed.mp3');
+    start = loadSound('sounds/start.mp3');
+    over = loadSound('sounds/over.mp3');
+
 
     for(var i=0; i<fruitsList.length; i++){
         fruitsImgs[i] = loadImage('images/'+ fruitsList[i] + '.png');
@@ -44,9 +55,13 @@ function setup(){
     newGameImg = loadImage('images/new-game.png');
     foregroundImg = loadImage('images/home-mask.png');
     bg = loadImage('images/background.jpg');
+
+}
+
+function setup(){
+    
     cnv = createCanvas(800,635);
     sword = new Sword(color("#FFFFFF"));
-    angleMode(DEGREES);
 
     frameRate(60);
     score = 0;
@@ -83,7 +98,6 @@ function setup(){
 //   }
 
 function draw(){
-    // console.log("draw");
     clear();
     background(bg);
 
@@ -109,17 +123,20 @@ function draw(){
 }
 
 function check(){
+
     // console.log(mouseX);
     // console.log(mouseY);
-    if(mouseX > 300 && mouseX < 520 && mouseY > 350 && mouseY < 550){
+    if( !isPlay && (mouseX > 300 && mouseX < 520 && mouseY > 350 && mouseY < 550)){
+        start.play();
         isPlay = true;
-
     }
 }
 
 function game(){
+
     clear();
     background(bg);
+    
     if(mouseIsPressed){
         sword.swipe(mouseX, mouseY);
     }
@@ -134,14 +151,9 @@ function game(){
         fruit[i].update();
         fruit[i].draw();
         if(!fruit[i].visible){
-
-            console.log( fruit[i].visible );
-
             if(!fruit[i].sliced && fruit[i].name != 'boom'){
+                missed.play();
                 lives--;
-                if(lives == 2){
-                    image(this.livesImgs2[0], width - (3*30 + 30), 20, livesImgs2[0].width, livesImgs2[0].height);
-                }
                 x++;
             }
             if(lives < 1 ){
@@ -149,12 +161,14 @@ function game(){
             }
             fruit.splice(i,1);
         }else{
-            console.log( "else" );
             if(fruit[i].sliced && fruit[i].name == 'boom'){
-                console.log("boom!!!");
+                boom.play()
                 gameOver();
             }
-            points += (sword.checkSlice(fruit[i])) ? 1 : 0;
+            if(sword.checkSlice(fruit[i])){
+                spliced.play();
+                points++;
+            }
         }
     }
     if(frameCount % 2 === 0 ){
@@ -183,6 +197,7 @@ function drawLives(){
     if(lives === 0){
         image(this.livesImgs2[2], width - 60, 20, livesImgs2[2].width, livesImgs2[2].height);
     }
+
 }
 
 function drawScore(){
@@ -196,6 +211,7 @@ function drawScore(){
 
 function gameOver(){
     noLoop();
+    over.play();
     clear();
     background(bg);
     image(this.gameOverImg, 155, 260, 490, 85);

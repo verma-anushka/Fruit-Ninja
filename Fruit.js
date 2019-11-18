@@ -4,7 +4,6 @@ function Fruit(x,y,speed,color,size,fruit,name){
     this.y = y;
     this.speed = speed;
     this.color = color;
-    // this.bomb = bomb; 
     this.size = size;
     this.xSpeed = randomXSpeed(x);
     this.ySpeed = random(-10.4, -7.4);
@@ -15,30 +14,10 @@ function Fruit(x,y,speed,color,size,fruit,name){
 }
 
 Fruit.prototype.draw = function(){
-    // console.log(fruitsList.length);
     fill(this.color);
     if(this.sliced){
-        // if(this.bomb){
-        //     gameOver();
-        // }
-        // this.color = lerpColor(this.color, color(51), 0.5);
     }else{
         image(this.fruit, this.x, this.y, this.size, this.size);
-        // console.log(this.fruit);
-        // var b = Math.round(random(99));
-        // if(b % 5 === 0 ){
-        //     image(this.bomb, this.x + 10, this.y - 10, this.size, this.size);
-        //     // // if(this.bomb.visible){
-        //     // //     console.log("visible");
-        //     //     if(bomb.sliced){
-        //     //         console.log("BOMB");
-        //     //         gameOver();
-        //     //     }
-        //     // // }
-        // }
-        if(this.fruit === bomb){
-            console.log("BOMB!!!!!!!!!")
-        }
     }
 };
 
