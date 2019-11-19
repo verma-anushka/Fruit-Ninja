@@ -10,6 +10,7 @@ var fruit = [];
 var livesImgs = [];
 var livesImgs2 = [];
 var fruitsList = ['apple', 'banana', 'peach', 'strawberry', 'watermelon', 'boom'];
+var slicedFruitsImgs = [];
 var fruitsImgs = [];
 var isPlay = false;
 // var timer;
@@ -19,33 +20,33 @@ var timerValue = 60;
 var startButton;
 var GRAVITY = 0.1;
 let img;
-let boom, spliced, missed, over, start;
-
-// p5.prototype.registerPreloadMethod('loadSound', p5.prototype);
+let boom, spliced, missed, over, start; // SOUNDS
+var apple1, apple2;
 
 
 function preload(){
 
-    // SOUNDS
+    // LOAD SOUNDS
     boom = loadSound('sounds/boom.mp3');
     spliced = loadSound('sounds/splatter.mp3');
     missed = loadSound('sounds/missed.mp3');
     start = loadSound('sounds/start.mp3');
     over = loadSound('sounds/over.mp3');
 
-
+    // LOAD IMAGES
+    for(var i=0; i<fruitsList.length-1; i++){
+        slicedFruitsImgs[2*i] = loadImage('images/'+ fruitsList[i] + '-1.png');
+        slicedFruitsImgs[2*i + 1] = loadImage('images/'+ fruitsList[i] + '-2.png');
+    }
     for(var i=0; i<fruitsList.length; i++){
         fruitsImgs[i] = loadImage('images/'+ fruitsList[i] + '.png');
     }
-
     for(var i=0; i<3; i++){
         livesImgs[i] = loadImage('images/x'+ (i+1) + '.png');
     }
-
     for(var i=0; i<3; i++){
         livesImgs2[i] = loadImage('images/xx'+ (i+1) + '.png');
     }
-
     bomb = loadImage('images/boom.png');
     scoreImg = loadImage('images/score.png');
     gameOverImg = loadImage('images/game-over.png');
@@ -55,7 +56,6 @@ function preload(){
     newGameImg = loadImage('images/new-game.png');
     foregroundImg = loadImage('images/home-mask.png');
     bg = loadImage('images/background.jpg');
-
 }
 
 function setup(){
@@ -152,6 +152,7 @@ function game(){
         fruit[i].draw();
         if(!fruit[i].visible){
             if(!fruit[i].sliced && fruit[i].name != 'boom'){
+                image(this.livesImgs2[0], fruit[i].x, fruit[i].y - 120, 50, 50);
                 missed.play();
                 lives--;
                 x++;
@@ -168,6 +169,8 @@ function game(){
             if(sword.checkSlice(fruit[i])){
                 spliced.play();
                 points++;
+                fruit[i].update();
+                fruit[i].draw();
             }
         }
     }

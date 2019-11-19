@@ -1,5 +1,5 @@
 
-function Fruit(x,y,speed,color,size,fruit,name){
+function Fruit(x,y,speed,color,size,fruit,slicedFruit1,slicedFruit2,name){
     this.x = x;
     this.y = y;
     this.speed = speed;
@@ -7,25 +7,36 @@ function Fruit(x,y,speed,color,size,fruit,name){
     this.size = size;
     this.xSpeed = randomXSpeed(x);
     this.ySpeed = random(-10.4, -7.4);
+    this.slicedSpeed = round(random(25,50));
     this.fruit = fruit;
+    this.slicedFruit1 = slicedFruit1;
+    this.slicedFruit2 = slicedFruit2;
     this.name = name;
     this.sliced = false;
     this.visible = true;
 }
 
 Fruit.prototype.draw = function(){
+
     fill(this.color);
-    if(this.sliced){
+    if(this.sliced && this.name != 'boom'){
+        image(this.slicedFruit1, this.x - 25, this.y, this.size, this.size);
+        image(this.slicedFruit2, this.x + 25, this.y, this.size, this.size);
     }else{
         image(this.fruit, this.x, this.y, this.size, this.size);
     }
 };
 
 Fruit.prototype.update = function(){
-
-    this.x += this.xSpeed;
-    this.y += this.ySpeed;
-    this.ySpeed += GRAVITY;
+    if(this.sliced && this.name != 'boom'){
+        this.x -= this.xSpeed ;
+        this.y += this.ySpeed;
+        this.ySpeed += GRAVITY*5;
+    }else{
+        this.x += this.xSpeed;
+        this.y += this.ySpeed;
+        this.ySpeed += GRAVITY;
+    }
     if(this.y > height){
         this.visible = false;
     }
@@ -40,8 +51,10 @@ function randomFruit(){
     var speed = random(3,5);
     var idx = round(random(0,fruitsList.length-1));
     var fruit = fruitsImgs[idx];
+    var slicedFruit1 = slicedFruitsImgs[2*idx];
+    var slicedFruit2 = slicedFruitsImgs[2*idx + 1];
     var name = fruitsList[idx];
-    return new Fruit(x,y,speed,col,size,fruit,name);
+    return new Fruit(x,y,speed,col,size,fruit,slicedFruit1,slicedFruit2,name);
 }
 
 function randomXSpeed(x){
