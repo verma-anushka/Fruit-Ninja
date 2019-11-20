@@ -1,10 +1,10 @@
+// Sword
 function Sword(color){
     this.swipes = [];
-    // this.swipeSizes = [];
     this.color = color;
 };
 
-Sword.prototype.draw = function(points, combo){
+Sword.prototype.draw = function(){
 
     var l = this.swipes.length;
     for(var i=0; i< this.swipes.length; i++){
@@ -21,8 +21,8 @@ Sword.prototype.draw = function(points, combo){
 };
 
 Sword.prototype.update = function(){
-    // fade swipe - delete last value
-    if(this.swipes.length > 20){
+    
+    if(this.swipes.length > 20){ // fade swipe - delete last value
         this.swipes.splice(0,1);
         this.swipes.splice(0,1);
     }
@@ -48,6 +48,6 @@ Sword.prototype.checkSlice = function(fruit){
     
 };
 
-Sword.prototype.swipe = function(x,y){
+Sword.prototype.swipe = function(x,y){ // sword
     this.swipes.push(createVector(x, y));
 }

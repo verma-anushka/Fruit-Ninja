@@ -1,4 +1,4 @@
-
+// FRUIT 
 function Fruit(x,y,speed,color,size,fruit,slicedFruit1,slicedFruit2,name){
     this.x = x;
     this.y = y;
@@ -7,7 +7,6 @@ function Fruit(x,y,speed,color,size,fruit,slicedFruit1,slicedFruit2,name){
     this.size = size;
     this.xSpeed = randomXSpeed(x);
     this.ySpeed = random(-10.4, -7.4);
-    this.slicedSpeed = round(random(25,50));
     this.fruit = fruit;
     this.slicedFruit1 = slicedFruit1;
     this.slicedFruit2 = slicedFruit2;
@@ -17,12 +16,11 @@ function Fruit(x,y,speed,color,size,fruit,slicedFruit1,slicedFruit2,name){
 }
 
 Fruit.prototype.draw = function(){
-
     fill(this.color);
-    if(this.sliced && this.name != 'boom'){
+    if(this.sliced && this.name != 'boom'){ // Draw sliced fruit
         image(this.slicedFruit1, this.x - 25, this.y, this.size, this.size);
         image(this.slicedFruit2, this.x + 25, this.y, this.size, this.size);
-    }else{
+    }else{ // Draw fruit
         image(this.fruit, this.x, this.y, this.size, this.size);
     }
 };
@@ -31,19 +29,18 @@ Fruit.prototype.update = function(){
     if(this.sliced && this.name != 'boom'){
         this.x -= this.xSpeed ;
         this.y += this.ySpeed;
-        this.ySpeed += GRAVITY*5;
+        this.ySpeed += gravity*5;
     }else{
         this.x += this.xSpeed;
         this.y += this.ySpeed;
-        this.ySpeed += GRAVITY;
+        this.ySpeed += gravity;
     }
     if(this.y > height){
         this.visible = false;
     }
-
 };
 
-function randomFruit(){
+function randomFruit(){ // Create randon fruit
     var x = random(width);
     var y = height;
     var size = noise(frameCount)*20 + 40;
